@@ -1,0 +1,59 @@
+diff -urN libgcrypt-1.4.4/configure.ac libgcrypt-1.4.4-new/configure.ac
+--- libgcrypt-1.4.4/configure.ac	2009-01-23 02:14:35.000000000 +0800
++++ libgcrypt-1.4.4-new/configure.ac	2009-11-11 16:59:20.000000000 +0800
+@@ -1123,6 +1123,8 @@
+ src/gcrypt.h
+ src/libgcrypt-config
+ src/versioninfo.rc
++src/libgcrypt.pc
++src/libgpg-error.pc
+ tests/Makefile
+ ])
+ AC_OUTPUT
+diff -urN libgcrypt-1.4.4/src/libgcrypt.pc.in libgcrypt-1.4.4-new/src/libgcrypt.pc.in
+--- libgcrypt-1.4.4/src/libgcrypt.pc.in	1970-01-01 08:00:00.000000000 +0800
++++ libgcrypt-1.4.4-new/src/libgcrypt.pc.in	2009-11-11 15:32:32.000000000 +0800
+@@ -0,0 +1,11 @@
++prefix=@prefix@
++exec_prefix=${prefix}
++libdir=${exec_prefix}/lib
++includedir=${exec_prefix}/include
++
++Name: libgcrypt
++Description: General purpose crypto library
++Version: @VERSION@
++Requires: libgpg-error
++Libs: -L${libdir} -lgcrypt
++Cflags: -I${includedir} 
+diff -urN libgcrypt-1.4.4/src/libgpg-error.pc.in libgcrypt-1.4.4-new/src/libgpg-error.pc.in
+--- libgcrypt-1.4.4/src/libgpg-error.pc.in	1970-01-01 08:00:00.000000000 +0800
++++ libgcrypt-1.4.4-new/src/libgpg-error.pc.in	2009-11-11 15:32:32.000000000 +0800
+@@ -0,0 +1,11 @@
++prefix=@prefix@
++exec_prefix=${prefix}
++libdir=${exec_prefix}/lib
++includedir=${exec_prefix}/include
++
++Name: libgpg-error
++Description: Library of common error values for all GnuPG components
++Version: @VERSION@
++Libs: -L${libdir} -lgpg-error
++Cflags: -I${includedir}
++
+diff -urN libgcrypt-1.4.4/src/Makefile.am libgcrypt-1.4.4-new/src/Makefile.am
+--- libgcrypt-1.4.4/src/Makefile.am	2008-09-11 21:47:58.000000000 +0800
++++ libgcrypt-1.4.4-new/src/Makefile.am	2009-11-11 15:32:32.000000000 +0800
+@@ -20,8 +20,12 @@
+ 
+ ## Process this file with automake to produce Makefile.in
+ 
++pcfiles = libgcrypt.pc libgpg-error.pc
++pkgconfig_DATA = $(pcfiles)
++pkgconfigdir = $(libdir)/pkgconfig
++
+ EXTRA_DIST = Manifest libgcrypt-config.in libgcrypt.m4 libgcrypt.vers \
+-             gcrypt.h.in libgcrypt.def
++             gcrypt.h.in libgcrypt.def libgcrypt.pc.in libgpg-error.pc.in
+ bin_SCRIPTS = libgcrypt-config
+ m4datadir = $(datadir)/aclocal
+ m4data_DATA = libgcrypt.m4
