@@ -1,3 +1,8 @@
+* Tue Dec 13 2011 Carsten Munk <carsten.munk@gmail.com> - 1.5.0
+- Upgrade to 1.5.0
+- Drop .pc file for libgpg-error, it should be -in- libgpg-error
+- Remake .pc patch
+
 * Wed Jan 27 2010 Passion Zhao <passion.zhao@intel.com> - 1.4.5
 - Update to 1.4.5
 

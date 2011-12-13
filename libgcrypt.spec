@@ -1,23 +1,21 @@
 #specfile originally created for Fedora, modified for Moblin Linux
 Name: libgcrypt
-Version: 1.4.5
+Version: 1.5.0
 Release: 1
 Source0: ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-%{version}.tar.bz2
 Source1: ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-%{version}.tar.bz2.sig
 Source2: wk@g10code.com
 Patch0: libgcrypt-adding-pc.patch
-
 License: LGPLv2+
 Summary: A general-purpose cryptography library
-BuildRoot: %{_tmppath}/%{name}-%{version}-root
-BuildRequires: gawk libgpg-error-devel pkgconfig
+BuildRequires: gawk pkgconfig(libgpg-error) pkgconfig
 Group: System/Libraries
 
 %package devel
 Summary: Development files for the %{name} package
 Group: Development/Libraries
 PreReq: /sbin/install-info
-Requires: libgpg-error-devel
+Requires: pkgconfig(libgpg-error)
 Requires: %{name} = %{version}-%{release}
 
 %description
@@ -32,7 +30,6 @@ applications using libgcrypt.
 %prep
 %setup -q
 %patch0 -p1
-
 %build
 autoreconf
 %configure --disable-static --enable-noexecstack 
