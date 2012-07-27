@@ -2,6 +2,7 @@
 Name: libgcrypt
 Version: 1.5.0
 Release: 1
+URL: http://www.gnu.org/software/libgcrypt/
 Source0: ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-%{version}.tar.bz2
 Source1: ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-%{version}.tar.bz2.sig
 Source2: wk@g10code.com
