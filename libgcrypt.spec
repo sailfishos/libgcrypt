@@ -1,4 +1,3 @@
-#specfile originally created for Fedora, modified for Moblin Linux
 Name: libgcrypt
 Version: 1.5.0
 Release: 1
@@ -9,13 +8,14 @@ Source2: wk@g10code.com
 Patch0: libgcrypt-adding-pc.patch
 License: LGPLv2+
 Summary: A general-purpose cryptography library
-BuildRequires: gawk pkgconfig(libgpg-error) pkgconfig
+BuildRequires: gawk pkgconfig(libgpg-error)
 Group: System/Libraries
 
 %package devel
 Summary: Development files for the %{name} package
 Group: Development/Libraries
-PreReq: /sbin/install-info
+Requires(post): /sbin/install-info
+Requires(preun): /sbin/install-info
 Requires: pkgconfig(libgpg-error)
 Requires: %{name} = %{version}-%{release}
 
@@ -31,6 +31,7 @@ applications using libgcrypt.
 %prep
 %setup -q
 %patch0 -p1
+
 %build
 autoreconf
 %configure --disable-static --enable-noexecstack 
@@ -50,41 +51,7 @@ sed -i -e 's,^libdir="/usr/lib.*"$,libdir="/usr/lib",g' $RPM_BUILD_ROOT/%{_bindi
 
 /sbin/ldconfig -n $RPM_BUILD_ROOT/%{_libdir}
 
-# Relocate the shared libraries to /%{_lib}.
-mkdir -p $RPM_BUILD_ROOT/%{_lib}
-for shlib in $RPM_BUILD_ROOT/%{_libdir}/*.so* ; do
-	if test -L "$shlib" ; then
-		rm "$shlib"
-	else
-		mv "$shlib" $RPM_BUILD_ROOT/%{_lib}/
-	fi
-done
-
-# Figure out where /%{_lib} is relative to %{_libdir}.
-touch $RPM_BUILD_ROOT/root_marker
-relroot=..
-while ! test -f $RPM_BUILD_ROOT/%{_libdir}/$relroot/root_marker ; do
-	relroot=$relroot/..
-done
-
-# Overwrite development symlinks.
-pushd $RPM_BUILD_ROOT/%{_libdir}
-for shlib in $relroot/%{_lib}/lib*.so.* ; do
-	shlib=`echo "$shlib" | sed -e 's,//,/,g'`
-	target=`basename "$shlib" | sed -e 's,\.so.*,,g'`.so
-	ln -sf $shlib $target
-done
-popd
-
-# Add soname symlink.
-/sbin/ldconfig -n $RPM_BUILD_ROOT/%{_lib}/
-rm -f $RPM_BUILD_ROOT/root_marker
-
 rm -f $RPM_BUILD_ROOT/usr/share/info/dir
-
-
-%clean
-rm -fr $RPM_BUILD_ROOT
 
 %post -p /sbin/ldconfig
 
@@ -102,8 +69,7 @@ exit 0
 
 %files
 %defattr(-,root,root)
-/%{_lib}/*.so.*
-#%{_libdir}/%{name}
+%{_libdir}/*.so.*
 
 %files devel
 %defattr(-,root,root)
@@ -113,7 +79,6 @@ exit 0
 %{_includedir}/*
 %{_libdir}/*.so
 %{_datadir}/aclocal/*
-#%{_datadir}/%{name}
 
 %{_infodir}/gcrypt.info*
 %{_libdir}/pkgconfig/*.pc
