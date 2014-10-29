@@ -1,3 +1,7 @@
+* Wed Oct 29 2014 Pasi Sjöholm <pasi.sjoholm@jollamobile.com> - 1.5.0-3
+- Fix CVE-2014-5270
+- Replace deliberate division by zero with new gcry_divideby_zero()
+
 * Mon Jun 09 2014 Pasi Sjöholm <pasi.sjoholm@siirappi.com> - 1.5.0
 - Fix CVE-2013-4242
 
