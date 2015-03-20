@@ -1,6 +1,6 @@
 Name: libgcrypt
 Version: 1.5.0
-Release: 3
+Release: 4
 URL: http://www.gnu.org/software/libgcrypt/
 Source0: ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-%{version}.tar.bz2
 Source1: ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-%{version}.tar.bz2.sig
@@ -9,6 +9,10 @@ Patch0: libgcrypt-adding-pc.patch
 Patch1: libgcrypt-flush-reload.patch
 Patch2: add_gcry_divide_by_zero.patch
 Patch3: CVE-2014-5270.patch
+Patch4: CVE-2014-3591.patch
+Patch5: CVE-2015-0837-1.patch
+Patch6: CVE-2015-0837-2.patch
+Patch7: CVE-2015-0837-3.patch
 License: LGPLv2+
 Summary: A general-purpose cryptography library
 BuildRequires: gawk pkgconfig(libgpg-error)
@@ -37,6 +41,10 @@ applications using libgcrypt.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
 
 %build
 autoreconf
