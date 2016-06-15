@@ -47,7 +47,7 @@ applications using libgcrypt.
 %patch7 -p1
 
 %build
-autoreconf
+autoreconf -vfi
 %configure --disable-static --enable-noexecstack 
 make
 
