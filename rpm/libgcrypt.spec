@@ -3,7 +3,6 @@ Version: 1.5.6
 Release: 1
 URL: http://www.gnu.org/software/libgcrypt/
 Source0: %{name}-%{version}.tar.gz
-Source1: wk@g10code.com
 Patch0: libgcrypt-adding-pc.patch
 Patch5: CVE-2015-0837-1.patch
 Patch6: CVE-2015-0837-2.patch
@@ -17,8 +16,6 @@ Group: System/Libraries
 %package devel
 Summary: Development files for the %{name} package
 Group: Development/Libraries
-Requires(post): /sbin/install-info
-Requires(preun): /sbin/install-info
 Requires: pkgconfig(libgpg-error)
 Requires: %{name} = %{version}-%{release}
 
@@ -64,16 +61,6 @@ rm -f $RPM_BUILD_ROOT/usr/share/info/dir
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
-
-%post devel
-/sbin/install-info %{_infodir}/gcrypt.info.gz %{_infodir}/dir
-exit 0
-
-%preun devel
-if [ $1 = 0 ]; then
-    /sbin/install-info --delete %{_infodir}/gcrypt.info.gz %{_infodir}/dir
-fi
-exit 0
 
 %files
 %defattr(-,root,root)
