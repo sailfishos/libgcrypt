@@ -1,0 +1,41 @@
+From 17a8b29ff7c9b8b04d30bf950fa67e6887343d13 Mon Sep 17 00:00:00 2001
+From: Matti Kosola <matti.kosola@jolla.com>
+Date: Fri, 23 Sep 2016 06:40:37 +0000
+Subject: [PATCH] Disable document building
+
+Signed-off-by: Matti Kosola <matti.kosola@jolla.com>
+---
+ Makefile.am  | 4 ++--
+ configure.ac | 1 -
+ 2 files changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index fbb5744..bf17f15 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -22,8 +22,8 @@ AUTOMAKE_OPTIONS = dist-bzip2
+ DISTCHECK_CONFIGURE_FLAGS = --enable-random-daemon \
+   --enable-ciphers=arcfour:blowfish:cast5:des:aes:twofish:serpent:rfc2268:seed:camellia
+ 
+-DIST_SUBDIRS = m4 compat mpi cipher random src doc tests
+-SUBDIRS =         compat mpi cipher random src doc tests
++DIST_SUBDIRS = m4 compat mpi cipher random src tests
++SUBDIRS =         compat mpi cipher random src tests
+ EXTRA_DIST = autogen.sh README.SVN
+ DISTCLEANFILES =
+ 
+diff --git a/configure.ac b/configure.ac
+index 75e5a52..c000e8f 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1198,7 +1198,6 @@ compat/Makefile
+ mpi/Makefile
+ cipher/Makefile
+ random/Makefile
+-doc/Makefile
+ src/Makefile
+ src/gcrypt.h
+ src/libgcrypt-config
+-- 
+1.8.3-rc3
+

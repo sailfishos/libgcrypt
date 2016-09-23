@@ -2,9 +2,8 @@ Name: libgcrypt
 Version: 1.5.0
 Release: 4
 URL: http://www.gnu.org/software/libgcrypt/
-Source0: ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-%{version}.tar.bz2
-Source1: ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-%{version}.tar.bz2.sig
-Source2: wk@g10code.com
+Source0: %{name}-%{version}.tar.gz
+Source1: wk@g10code.com
 Patch0: libgcrypt-adding-pc.patch
 Patch1: libgcrypt-flush-reload.patch
 Patch2: add_gcry_divide_by_zero.patch
@@ -13,6 +12,7 @@ Patch4: CVE-2014-3591.patch
 Patch5: CVE-2015-0837-1.patch
 Patch6: CVE-2015-0837-2.patch
 Patch7: CVE-2015-0837-3.patch
+Patch8: 0001-Disable-document-building.patch
 License: LGPLv2+
 Summary: A general-purpose cryptography library
 BuildRequires: gawk pkgconfig(libgpg-error)
@@ -36,7 +36,7 @@ in GNU Privacy Guard.  This package contains files needed to develop
 applications using libgcrypt.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}/%{name}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -45,8 +45,10 @@ applications using libgcrypt.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 %build
+echo -n %{version} | cut -d'+' -f1 > VERSION
 autoreconf -vfi
 %configure --disable-static --enable-noexecstack 
 make
@@ -94,6 +96,5 @@ exit 0
 %{_libdir}/*.so
 %{_datadir}/aclocal/*
 
-%{_infodir}/gcrypt.info*
 %{_libdir}/pkgconfig/*.pc
 
