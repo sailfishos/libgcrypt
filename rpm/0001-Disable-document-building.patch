@@ -1,6 +1,6 @@
-From 17a8b29ff7c9b8b04d30bf950fa67e6887343d13 Mon Sep 17 00:00:00 2001
+From a8235deee929bf533371275f47a0e594767b7b9c Mon Sep 17 00:00:00 2001
 From: Matti Kosola <matti.kosola@jolla.com>
-Date: Fri, 23 Sep 2016 06:40:37 +0000
+Date: Fri, 23 Sep 2016 10:01:53 +0000
 Subject: [PATCH] Disable document building
 
 Signed-off-by: Matti Kosola <matti.kosola@jolla.com>
@@ -10,25 +10,25 @@ Signed-off-by: Matti Kosola <matti.kosola@jolla.com>
  2 files changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/Makefile.am b/Makefile.am
-index fbb5744..bf17f15 100644
+index c2dc6d6..257bdb6 100644
 --- a/Makefile.am
 +++ b/Makefile.am
-@@ -22,8 +22,8 @@ AUTOMAKE_OPTIONS = dist-bzip2
- DISTCHECK_CONFIGURE_FLAGS = --enable-random-daemon \
-   --enable-ciphers=arcfour:blowfish:cast5:des:aes:twofish:serpent:rfc2268:seed:camellia
+@@ -24,8 +24,8 @@ DISTCHECK_CONFIGURE_FLAGS = --enable-random-daemon \
+ # (A suitable gitlog-to-changelog script can be found in GnuPG master.)
+ GITLOG_TO_CHANGELOG=gitlog-to-changelog
  
 -DIST_SUBDIRS = m4 compat mpi cipher random src doc tests
 -SUBDIRS =         compat mpi cipher random src doc tests
 +DIST_SUBDIRS = m4 compat mpi cipher random src tests
 +SUBDIRS =         compat mpi cipher random src tests
- EXTRA_DIST = autogen.sh README.SVN
- DISTCLEANFILES =
- 
+ EXTRA_DIST = autogen.sh README.GIT \
+ 	     scripts/ChangeLog-2011 doc/ChangeLog-2011 ChangeLog-2011 \
+              m4/ChangeLog-2011 cipher/ChangeLog-2011 src/ChangeLog-2011 \
 diff --git a/configure.ac b/configure.ac
-index 75e5a52..c000e8f 100644
+index a3fb586..de53a49 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -1198,7 +1198,6 @@ compat/Makefile
+@@ -1218,7 +1218,6 @@ compat/Makefile
  mpi/Makefile
  cipher/Makefile
  random/Makefile

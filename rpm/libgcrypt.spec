@@ -1,14 +1,10 @@
 Name: libgcrypt
-Version: 1.5.0
-Release: 4
+Version: 1.5.6
+Release: 1
 URL: http://www.gnu.org/software/libgcrypt/
 Source0: %{name}-%{version}.tar.gz
 Source1: wk@g10code.com
 Patch0: libgcrypt-adding-pc.patch
-Patch1: libgcrypt-flush-reload.patch
-Patch2: add_gcry_divide_by_zero.patch
-Patch3: CVE-2014-5270.patch
-Patch4: CVE-2014-3591.patch
 Patch5: CVE-2015-0837-1.patch
 Patch6: CVE-2015-0837-2.patch
 Patch7: CVE-2015-0837-3.patch
@@ -38,10 +34,6 @@ applications using libgcrypt.
 %prep
 %setup -q -n %{name}-%{version}/%{name}
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
