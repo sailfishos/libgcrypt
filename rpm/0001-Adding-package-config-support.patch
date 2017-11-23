@@ -1,0 +1,63 @@
+From 508d5308dcd78733c7fab3aba04e31fe84ea8cdc Mon Sep 17 00:00:00 2001
+From: Raine Makelainen <raine.makelainen@jolla.com>
+Date: Thu, 23 Nov 2017 17:50:24 +0200
+Subject: [PATCH] Adding package config support
+
+Signed-off-by: Raine Makelainen <raine.makelainen@jolla.com>
+---
+ configure.ac        |  1 +
+ src/Makefile.am     |  6 +++++-
+ src/libgcrypt.pc.in | 11 +++++++++++
+ 3 files changed, 17 insertions(+), 1 deletion(-)
+ create mode 100644 src/libgcrypt.pc.in
+
+diff --git a/configure.ac b/configure.ac
+index 7a78e30..d626ac9 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -2610,6 +2610,7 @@ src/Makefile
+ src/gcrypt.h
+ src/libgcrypt-config
+ src/versioninfo.rc
++src/libgcrypt.pc
+ tests/Makefile
+ ])
+ AC_CONFIG_FILES([tests/hashtest-256g], [chmod +x tests/hashtest-256g])
+diff --git a/src/Makefile.am b/src/Makefile.am
+index 3cc4a55..c687c2c 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -20,8 +20,12 @@
+ 
+ ## Process this file with automake to produce Makefile.in
+ 
++pcfiles = libgcrypt.pc
++pkgconfig_DATA = $(pcfiles)
++pkgconfigdir = $(libdir)/pkgconfig
++
+ EXTRA_DIST = libgcrypt-config.in libgcrypt.m4 libgcrypt.vers \
+-             gcrypt.h.in libgcrypt.def
++             gcrypt.h.in libgcrypt.def libgcrypt.pc.in
+ 
+ bin_SCRIPTS = libgcrypt-config
+ m4datadir = $(datadir)/aclocal
+diff --git a/src/libgcrypt.pc.in b/src/libgcrypt.pc.in
+new file mode 100644
+index 0000000..35a6bb3
+--- /dev/null
++++ b/src/libgcrypt.pc.in
+@@ -0,0 +1,11 @@
++prefix=@prefix@
++exec_prefix=${prefix}
++libdir=${exec_prefix}/lib
++includedir=${exec_prefix}/include
++
++Name: libgcrypt
++Description: General purpose crypto library
++Version: @VERSION@
++Requires: libgpg-error
++Libs: -L${libdir} -lgcrypt
++Cflags: -I${includedir}
+-- 
+2.7.4
+
