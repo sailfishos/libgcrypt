@@ -1,6 +1,6 @@
 Name: libgcrypt
 Version: 1.8.1
-Release: 1
+Release: 2
 URL: http://www.gnu.org/software/libgcrypt/
 Source0: %{name}-%{version}.tar.gz
 Patch0: 0001-Adding-package-config-support.patch
@@ -35,7 +35,9 @@ autoreconf -vfi
 make
 
 %check
+%if ! 0%{?qemu_user_space_build}
 make check
+%endif
 
 %install
 rm -fr $RPM_BUILD_ROOT
