@@ -29,7 +29,16 @@ applications using libgcrypt.
 %build
 echo -n %{version} | cut -d'+' -f1 > VERSION
 autoreconf -vfi
-%configure --disable-static --enable-noexecstack --disable-doc
+# NOTE! Disabling ARMv8 crypto for aarch64 as some of the tests
+# relying on crypto implementations which use ARMv8 extensions
+# will fail. When updating to future versions check if the extensions
+# work with aarch64 as well.
+%configure --disable-static \
+           --disable-doc \
+%ifarch aarch64
+           --disable-arm-crypto-support \
+%endif
+           --enable-noexecstack
 make
 
 %check
