@@ -3,14 +3,14 @@ Version: 1.8.5
 Release: 1
 URL: http://www.gnu.org/software/libgcrypt/
 Source0: %{name}-%{version}.tar.gz
+# Fix build on ARMv7
+Patch0: libgcrypt-1.8.5-build.patch
 License: LGPLv2+
 Summary: A general-purpose cryptography library
 BuildRequires: gawk pkgconfig(libgpg-error)
-Group: System/Libraries
 
 %package devel
 Summary: Development files for the %{name} package
-Group: Development/Libraries
 Requires: pkgconfig(libgpg-error)
 Requires: %{name} = %{version}-%{release}
 
@@ -24,20 +24,13 @@ in GNU Privacy Guard.  This package contains files needed to develop
 applications using libgcrypt.
 
 %prep
-%setup -q -n %{name}-%{version}/%{name}
+%autosetup -p1 -n %{name}-%{version}/%{name}
 
 %build
 echo -n %{version} | cut -d'+' -f1 > VERSION
 autoreconf -vfi
-# NOTE! Disabling ARMv8 crypto for aarch64 as some of the tests
-# relying on crypto implementations which use ARMv8 extensions
-# will fail. When updating to future versions check if the extensions
-# work with aarch64 as well.
 %configure --disable-static \
            --disable-doc \
-%ifarch aarch64
-           --disable-arm-crypto-support \
-%endif
            --enable-noexecstack
 make
 
