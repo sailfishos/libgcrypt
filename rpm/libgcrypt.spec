@@ -8,11 +8,9 @@ Patch0: libgcrypt-1.8.5-build.patch
 License: LGPLv2+
 Summary: A general-purpose cryptography library
 BuildRequires: gawk pkgconfig(libgpg-error)
-Group: System/Libraries
 
 %package devel
 Summary: Development files for the %{name} package
-Group: Development/Libraries
 Requires: pkgconfig(libgpg-error)
 Requires: %{name} = %{version}-%{release}
 
