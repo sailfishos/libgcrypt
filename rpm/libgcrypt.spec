@@ -3,6 +3,8 @@ Version: 1.8.5
 Release: 1
 URL: http://www.gnu.org/software/libgcrypt/
 Source0: %{name}-%{version}.tar.gz
+# Fix build on ARMv7
+Patch0: libgcrypt-1.8.5-build.patch
 License: LGPLv2+
 Summary: A general-purpose cryptography library
 BuildRequires: gawk pkgconfig(libgpg-error)
@@ -24,7 +26,7 @@ in GNU Privacy Guard.  This package contains files needed to develop
 applications using libgcrypt.
 
 %prep
-%setup -q -n %{name}-%{version}/%{name}
+%autosetup -p1 -n %{name}-%{version}/%{name}
 
 %build
 echo -n %{version} | cut -d'+' -f1 > VERSION
