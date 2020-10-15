@@ -1,26 +1,27 @@
-Name: libgcrypt
-Version: 1.8.5
-Release: 1
-URL: http://www.gnu.org/software/libgcrypt/
-Source0: %{name}-%{version}.tar.gz
-# Fix build on ARMv7
-Patch0: libgcrypt-1.8.5-build.patch
-License: LGPLv2+
+Name:    libgcrypt
 Summary: A general-purpose cryptography library
-BuildRequires: gawk pkgconfig(libgpg-error)
+Version: 1.8.6
+Release: 1
+License: LGPLv2+
+URL:     http://www.gnu.org/software/libgcrypt/
+Source0: %{name}-%{version}.tar.gz
+BuildRequires: autoconf
+BuildRequires: libtool
+BuildRequires: gawk
+BuildRequires: pkgconfig(libgpg-error)
+
+%description
+Libgcrypt is a general purpose crypto library based on the code used
+in GNU Privacy Guard. This is a development version.
 
 %package devel
 Summary: Development files for the %{name} package
 Requires: pkgconfig(libgpg-error)
 Requires: %{name} = %{version}-%{release}
 
-%description
-Libgcrypt is a general purpose crypto library based on the code used
-in GNU Privacy Guard.  This is a development version.
-
 %description devel
 Libgcrypt is a general purpose crypto library based on the code used
-in GNU Privacy Guard.  This package contains files needed to develop
+in GNU Privacy Guard. This package contains files needed to develop
 applications using libgcrypt.
 
 %prep
@@ -28,27 +29,25 @@ applications using libgcrypt.
 
 %build
 echo -n %{version} | cut -d'+' -f1 > VERSION
-autoreconf -vfi
-%configure --disable-static \
-           --disable-doc \
-           --enable-noexecstack
-make
+%reconfigure --disable-static \
+             --disable-doc \
+             --enable-noexecstack
+%make_build
 
 %check
 make check
 
 %install
-rm -fr $RPM_BUILD_ROOT
 %make_install
 
 # Change /usr/lib64 back to /usr/lib.  This saves us from having to patch the
 # script to "know" that -L/usr/lib64 should be suppressed, and also removes
 # a file conflict between 32- and 64-bit versions of this package.
-sed -i -e 's,^libdir="/usr/lib.*"$,libdir="/usr/lib",g' $RPM_BUILD_ROOT/%{_bindir}/libgcrypt-config
+sed -i -e 's,^libdir="/usr/lib.*"$,libdir="/usr/lib",g' %{buildroot}/%{_bindir}/libgcrypt-config
 
-/sbin/ldconfig -n $RPM_BUILD_ROOT/%{_libdir}
+/sbin/ldconfig -n %{buildroot}/%{_libdir}
 
-rm -f $RPM_BUILD_ROOT/usr/share/info/dir
+rm -f %{buildroot}/usr/share/info/dir
 
 %post -p /sbin/ldconfig
 
@@ -56,6 +55,7 @@ rm -f $RPM_BUILD_ROOT/usr/share/info/dir
 
 %files
 %defattr(-,root,root)
+%license COPYING.LIB
 %{_libdir}/*.so.*
 
 %files devel
@@ -66,7 +66,5 @@ rm -f $RPM_BUILD_ROOT/usr/share/info/dir
 %{_bindir}/mpicalc
 %{_includedir}/*
 %{_libdir}/*.so
+%{_libdir}/pkgconfig/libgcrypt.pc
 %{_datadir}/aclocal/*
-
-%{_libdir}/pkgconfig/*.pc
-
