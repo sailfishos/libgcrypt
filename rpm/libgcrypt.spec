@@ -8,7 +8,7 @@ Source0: %{name}-%{version}.tar.gz
 BuildRequires: autoconf
 BuildRequires: libtool
 BuildRequires: gawk
-BuildRequires: pkgconfig(libgpg-error)
+BuildRequires: pkgconfig(gpg-error)
 
 %description
 Libgcrypt is a general purpose crypto library based on the code used
@@ -16,7 +16,6 @@ in GNU Privacy Guard. This is a development version.
 
 %package devel
 Summary: Development files for the %{name} package
-Requires: pkgconfig(libgpg-error)
 Requires: %{name} = %{version}-%{release}
 
 %description devel
