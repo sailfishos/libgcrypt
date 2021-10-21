@@ -1,6 +1,6 @@
 Name:    libgcrypt
 Summary: A general-purpose cryptography library
-Version: 1.8.6
+Version: 1.9.4
 Release: 1
 License: LGPLv2+
 URL:     http://www.gnu.org/software/libgcrypt/
@@ -12,7 +12,7 @@ BuildRequires: pkgconfig(gpg-error)
 
 %description
 Libgcrypt is a general purpose crypto library based on the code used
-in GNU Privacy Guard. This is a development version.
+in GNU Privacy Guard.
 
 %package devel
 Summary: Development files for the %{name} package
