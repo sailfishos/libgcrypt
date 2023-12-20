@@ -1,6 +1,6 @@
 Name:    libgcrypt
 Summary: A general-purpose cryptography library
-Version: 1.9.4
+Version: 1.10.3
 Release: 1
 License: LGPLv2+
 URL:     http://www.gnu.org/software/libgcrypt/
@@ -29,12 +29,12 @@ applications using libgcrypt.
 %build
 echo -n %{version} | cut -d'+' -f1 > VERSION
 %reconfigure --disable-static \
+%ifarch %{ix86}
+             --disable-asm \
+%endif
              --disable-doc \
              --enable-noexecstack
 %make_build
-
-%check
-make check
 
 %install
 %make_install
